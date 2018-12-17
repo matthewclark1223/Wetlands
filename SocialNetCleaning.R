@@ -4,6 +4,7 @@ View(data)
 #remove the response from one of the researchers
 #data<-data[data$RecipientEmail!="matthewclark989@boisestate.edu",]....Why doesn't this work????...whatever...
 data<-data[-40,]
+data<-data[-27,]
 data<-data[-6,]
 
 #Remove irrelevant columns
@@ -117,13 +118,30 @@ row.names(SenMat)[which(row.names(SenMat)=="Chippewa_Cree_Tribe,Rocky_Boy's_Indi
 row.names(SenMat)[which(row.names(SenMat)=="Confederated_Salish_Kootenai_Tribes,Polson,_MT")]= "Confederated_Salish_and_Kootenai_Tribes’_Fisheries_Program_Pablo"
 row.names(SenMat)[which(row.names(SenMat)=="DOWL,Billings")]= "Dowl_Billings"
 row.names(SenMat)[which(row.names(SenMat)=="Du,Bozeman,_mt")]= "Ducks_Unlimited_Bozeman"
+row.names(SenMat)[which(row.names(SenMat)=="Five_Valleys_Land_Trust,Missoula,_MT")]= "Five_Valleys_Land_Trust_Missoula"
+row.names(SenMat)[which(row.names(SenMat)=="Flathead_Lakers,Polson,_MT")]= "Flathead_Lakers_Polson"
+row.names(SenMat)[which(row.names(SenMat)=="Flathead_Land_Trust,Kalispell,_MT")]= "Flathead_Land_Trust_Kalispell"
+row.names(SenMat)[which(row.names(SenMat)=="Gallatin_Cons._district,Manhatten,_MT")]= "conservation_district_Gallatin"
+row.names(SenMat)[which(row.names(SenMat)=="Gallatin_Valley_Land_Trust,Bozeman,_Montana")]= "Gallatin_Valley_Land_Trust_Bozeman"
+row.names(SenMat)[which(row.names(SenMat)=="Geum_Environmental_Consulting,_Inc.,Hamilton,_Montana")]= "Geum_Consulting_Hamilton"
+row.names(SenMat)[which(row.names(SenMat)=="Kaniksu_Land_Trust,Sandpoint,_ID")]= "Kaniksu_Land_Trust_Sandpoint"
+row.names(SenMat)[which(row.names(SenMat)=="Lower_Musselshell_Conservation_District,Roundup,_MT")]= "conservation_district_Lower_Musselshell"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_Aquatic_Resources_Services_(MARS),Office:_Livingston,_MT;_Work:_Statewide")]= "Montana_Aquatic_Resources_Services_Bozeman"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_Audubon,Helena_MT")]= "Montana_Audubon_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_Department_of_Transportation,Helena,_MT")]= "Montana_Department_of_Transportation_Wetland_Mitigation_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_DEQ,Helena,_MT")]= "Montana_Department_of_Environmental_Quality_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_Fish,_Wildlife_&_Parks,Kalispell,_MT")]= "Montana_Fish,_Wildlife,_and_Parks_Kalispell"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_Fish,_Wildlife_and_Parks,Helena")]= "Montana_Fish,_Wildlife,_and_Parks_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_Watershed_Coordination_Council,Helena,_MT")]= "Montana_Watershed_Coordination_Council_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="Northern_Cheyenne_Tribe,Lame_Deer,_MT")]= "Northern_Cheyenne_Tribe_Lame_deer"
+row.names(SenMat)[which(row.names(SenMat)=="Montana_Conservation_Corps,Bozeman")]= "Big_Sky_Watershed_Corps"
+row.names(SenMat)[which(row.names(SenMat)=="River_Design_Group,_Inc.,Whitefish,_MT")]= "River_Design_Group_Whitefish"
+row.names(SenMat)[which(row.names(SenMat)=="The_Nature_Conservancy,Montana")]= "The_Nature_Conservancy_Bozeman"
+row.names(SenMat)[which(row.names(SenMat)=="The_Nature_Conservancy,Western_Montana")]= "The_Nature_Conservancy_Missoula"
+row.names(SenMat)[which(row.names(SenMat)=="Trout_Unlimited,Missoula")]= "Trout_Unlimited_Missoula"
 
 
-
-
-
-
-SenMat$duc
+SenMat$Trout_Unlimited_Missoula
 
 
 #Use this to deal with all the numbered row names
