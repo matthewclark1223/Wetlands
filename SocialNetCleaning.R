@@ -3,9 +3,10 @@ data<-read_csv("~/Wetlands/Full_Survey_Results (2).csv")
 View(data)
 #remove the response from one of the researchers
 #data<-data[data$RecipientEmail!="matthewclark989@boisestate.edu",]....Why doesn't this work????...whatever...
-data<-data[-40,]
-data<-data[-27,]
-data<-data[-6,]
+data<-data[-65,] #CSK tribe double response, same IP address
+data<-data[-40,] #MT DOT survey pretest response
+data<-data[-27,] #Respondant identified as "environmental"
+data<-data[-6,] #Matt Clark response
 
 #Remove irrelevant columns
 data<-data[,-c(1:17)]
@@ -139,12 +140,25 @@ row.names(SenMat)[which(row.names(SenMat)=="River_Design_Group,_Inc.,Whitefish,_
 row.names(SenMat)[which(row.names(SenMat)=="The_Nature_Conservancy,Montana")]= "The_Nature_Conservancy_Bozeman"
 row.names(SenMat)[which(row.names(SenMat)=="The_Nature_Conservancy,Western_Montana")]= "The_Nature_Conservancy_Missoula"
 row.names(SenMat)[which(row.names(SenMat)=="Trout_Unlimited,Missoula")]= "Trout_Unlimited_Missoula"
+row.names(SenMat)[which(row.names(SenMat)=="U.S._Army_Corps_of_Engineers,Missoula,_MT")]= "Army_Corps_of_Engineers_Missoula"
+row.names(SenMat)[which(row.names(SenMat)=="Upper_Musselshell_Conservation_District,Harlowton,_MT")]= "conservation_district_Upper_Musselshell"
+row.names(SenMat)[which(row.names(SenMat)=="US_Army_Corps_of_Engineers,Helena,_Montana")]= "Army_Corps_of_Engineers_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="USFWS,Blackfoot_Valley_Montana")]= "USFW-Benton_Lake_Wetland_Management_District"
+row.names(SenMat)[which(row.names(SenMat)=="USFWS,Lost_Trail_NWR")]= "USFW-Northwest_Montana_Wetland_Management_District-Flathead_County"
+row.names(SenMat)[which(row.names(SenMat)=="USGS,Helena,_Mt")]= "USGS-Wyoming-Montana_Water_Science_Center_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="Watershed_Consulting_LLC,Missoula,_Montana")]= "Watershed_Consulting_Missoula"
+row.names(SenMat)[which(row.names(SenMat)=="Beaverhead_Watershed_Committee,Dillon,_MT")]= "conservation_district_Beaverhead"
+row.names(SenMat)[which(row.names(SenMat)=="BLM,Glasgow,_MT")]= "BLM_Glasgow_MT"
 
 
-SenMat$Trout_Unlimited_Missoula
-
+SenMat$BLM_Glasgow_MT<-rep(0,161)
 
 #Use this to deal with all the numbered row names
-rownames(SenMat)[1:2]<-c("Army_Corps_of_Engineers_Billings","Army_Corps_of_Engineers_Helena")
+x<-row.names(SenMat)
+y<-names(SenMat)
+NewN<-which(y %in% x == FALSE)
+numbered<-which(x %in% y == FALSE)
+
+rownames(SenMat)[numbered]<-names(SenMat)[NewN]
 
 
