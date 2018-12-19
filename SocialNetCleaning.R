@@ -62,7 +62,7 @@ SenMat[1,]<-gsub("information", "",SenMat[1,])
 SenMat[1,]<-gsub(" - ", "",SenMat[1,])
 SenMat[1,]<-gsub("?", "",SenMat[1,], fixed=TRUE)
 SenMat[1,]<-gsub(" ", "_",SenMat[1,])
-SenMat[,1]<-gsub(" ", "_",SenMat[1,])
+SenMat[,1]<-gsub(" ", "_",SenMat[,1])
 
 
 colnames(SenMat) = SenMat[1, ] # the first row will be the header
@@ -100,10 +100,12 @@ names(SenMat)<-substring(names(SenMat),2) #remove hanging underscore
 
 #Now create rows to match all of the columns
 
-for(i in 1:121 ){
-  SenMat<-rbind(rep(0,163),SenMat)
+
+for(i in 1:124 ){
+  SenMat<-rbind(rep(0,164),SenMat)
 }
 
+SenMat$BLM_Glasgow_MT<-rep(0,164)
 #Now make the "old" names match the newer ones
 
 row.names(SenMat)=gsub(" ","_",row.names(SenMat)) #Get rid of any spaces
@@ -151,7 +153,7 @@ row.names(SenMat)[which(row.names(SenMat)=="Beaverhead_Watershed_Committee,Dillo
 row.names(SenMat)[which(row.names(SenMat)=="BLM,Glasgow,_MT")]= "BLM_Glasgow_MT"
 
 
-SenMat$BLM_Glasgow_MT<-rep(0,161)
+
 
 #Use this to deal with all the numbered row names
 x<-row.names(SenMat)
@@ -161,4 +163,38 @@ numbered<-which(x %in% y == FALSE)
 
 rownames(SenMat)[numbered]<-names(SenMat)[NewN]
 
+
+#Check to make sure the row names and column names are the exact same. 
+which(row.names(SenMat) %in% names(SenMat) ==FALSE)
+
+#Make the df numeric
+for(i in 1:ncol(SenMat)){
+  SenMat[,i]<-as.numeric(SenMat[,i])
+}
+#Order rows and columns
+SenMat <- SenMat[ order(row.names(SenMat)), order(names(SenMat))]
+#Make an igraph object
+library(igraph)
+
+#Let's make it binary
+SenMat[SenMat==0]<-0
+SenMat[SenMat==1]<-1
+SenMat[SenMat==2]<-1
+SenMat[SenMat==3]<-1
+SenMat[SenMat==4]<-1
+SenMat[SenMat==5]<-1
+###
+
+m=as.matrix(SenMat)
+g=graph_from_adjacency_matrix(m,mode="undirected",weighted=NULL)
+
+plot(g, vertex.size=6,vertex.label=NA)
+plot(g, vertex.size=6,vertex.label=NA, rescale=F,ylim=c(-3,5),xlim=c(-5,5), asp = 0)
+
+edge_density(g,loops=F)
+diameter(g,directed=F, weights=NA)
+
+deg<-degree(g, mode="all")
+plot(g,vertex.size=deg*0.2,vertex.label=NA)
+hist(deg,breaks=1:vcount(g)-1,main="Hist node degree")
 
