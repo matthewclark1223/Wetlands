@@ -84,6 +84,8 @@ names(y10)<-names(ten)
 row.names(y10)<-rows10
 ten<-rbind(ten,y10)
 ten <- ten[ order(row.names(ten)), order(names(ten))]
+
+
 write.csv(ten,file="~/Wetlands/Wetland Connectivity/Adj_mat_10KM.csv")
 
 

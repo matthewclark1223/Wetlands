@@ -1,5 +1,5 @@
 library(readr)
-data<-read_csv("~/Wetlands/Full_Survey_Results (2).csv")
+data<-read_csv("~/Wetlands/Full_Survey_Results_3_4_2019.csv")
 View(data)
 #remove the response from one of the researchers
 #data<-data[data$RecipientEmail!="matthewclark989@boisestate.edu",]....Why doesn't this work????...whatever...
@@ -43,6 +43,8 @@ data[1,]<-gsub(")", "",data[1,])
 
 
 names(data)[1]<-"Q1"
+
+#Let's get rid of anything that's NA for Q1 or Q2
 
 completeFun <- function(data, desiredCols) {
   completeVec <- complete.cases(data[, desiredCols])
@@ -94,6 +96,7 @@ SenMat<-SenMat2
 SenMat<-SenMat[ , order(names(SenMat))]
 SenMat<-SenMat[ order(row.names(SenMat)), ]
 
+#Get rid of openended responses (snowballs)
 SenMat<-SenMat[,-c(164:173)]
 
 names(SenMat)<-substring(names(SenMat),2) #remove hanging underscore
@@ -105,12 +108,24 @@ for(i in 1:124 ){
   SenMat<-rbind(rep(0,164),SenMat)
 }
 
-SenMat$BLM_Glasgow_MT<-rep(0,164)
+#add in the snowballed organizations and a BLM office we missed
+SenMat$BLM_Glasgow_MT<-rep(0,169)
+SenMat$Morrison_Maierle_Helena<-rep(0,169)
+SenMat$Rocky_Mountain_Elk_Foundation_Missoula<-rep(0,169)
+SenMat$Robert_Peccia_Associates_Helena<-rep(0,169)
+SenMat$Kootenai_Tribe_of_Idaho_Bonners_Ferry<-rep(0,169)
+SenMat$Swan_Valley_Connections_Condon<-rep(0,169)
+
 #Now make the "old" names match the newer ones
 
 row.names(SenMat)=gsub(" ","_",row.names(SenMat)) #Get rid of any spaces
 
-#Make all the names match from the 42 we have data for
+#Make all the names match from the 45 we have data for
+row.names(SenMat)[which(row.names(SenMat)=="Morrison_Maierle,Helena")]= "Morrison_Maierle_Helena" 
+row.names(SenMat)[which(row.names(SenMat)=="Rocky_Mountain_Elk_Foundation,Missoula,_MT")]= "Rocky_Mountain_Elk_Foundation_Missoula"
+row.names(SenMat)[which(row.names(SenMat)=="Robert_Peccia_&_Associates,Helena,_MT")]= "Robert_Peccia_Associates_Helena"
+row.names(SenMat)[which(row.names(SenMat)=="Kootenai_Tribe_of_Idaho,Bonners_Ferry,_ID")]= "Kootenai_Tribe_of_Idaho_Bonners_Ferry"
+row.names(SenMat)[which(row.names(SenMat)=="Swan_Valley_Connections,Condon,_MT")]= "Swan_Valley_Connections_Condon"
 row.names(SenMat)[which(row.names(SenMat)=="Big_Hole_Watershed_Committee,Big_Hole_River_Watershed")]= "Big_Hole_Watershed_Committee_Divide" 
 row.names(SenMat)[which(row.names(SenMat)=="Blackfeet_Environmental_office,Browning_Mt")]= "Blackfeet_Nation_Blackfeet_Reservation"
 row.names(SenMat)[which(row.names(SenMat)=="BLM,Butte,_MT")]= "BLM_Butte"
@@ -155,6 +170,8 @@ row.names(SenMat)[which(row.names(SenMat)=="BLM,Glasgow,_MT")]= "BLM_Glasgow_MT"
 
 
 
+
+
 #Use this to deal with all the numbered row names
 x<-row.names(SenMat)
 y<-names(SenMat)
@@ -166,6 +183,8 @@ rownames(SenMat)[numbered]<-names(SenMat)[NewN]
 
 #Check to make sure the row names and column names are the exact same. 
 which(row.names(SenMat) %in% names(SenMat) ==FALSE)
+
+which(names(SenMat) %in% row.names(SenMat) ==FALSE)
 
 #Make the df numeric
 for(i in 1:ncol(SenMat)){
@@ -184,11 +203,12 @@ SenMat[SenMat==3]<-1
 SenMat[SenMat==4]<-1
 SenMat[SenMat==5]<-1
 ###
+write.csv(SenMat, file="Social_net.csv")
 
 m=as.matrix(SenMat)
 g=graph_from_adjacency_matrix(m,mode="undirected",weighted=NULL)
 
-plot(g, vertex.size=6,vertex.label=NA)
+plot(g, vertex.size=6)
 plot(g, vertex.size=6,vertex.label=NA, rescale=F,ylim=c(-3,5),xlim=c(-5,5), asp = 0)
 
 edge_density(g,loops=F)
@@ -197,4 +217,3 @@ diameter(g,directed=F, weights=NA)
 deg<-degree(g, mode="all")
 plot(g,vertex.size=deg*0.2,vertex.label=NA)
 hist(deg,breaks=1:vcount(g)-1,main="Hist node degree")
-
