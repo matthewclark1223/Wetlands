@@ -5,7 +5,7 @@ library(ggnetwork)
 library(geomnet)
 library(GGally)
 invisible(lapply(c("ggplot2", "maps", "network", "sna"), base::library, character.only = TRUE))
-register_google(key = "AIzaSyAs88ik0Q7x8yY7JcvRzVLSYvUt9IkQr58")
+register_google(key = "XXXXXX")
 mt<-map_data(database = "state", "montana")
 
 Net<-as.network(x=Net, directed=F, loops=F, matrix.type="adjacency")
