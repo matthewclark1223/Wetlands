@@ -36,6 +36,7 @@ wetnet<-cbind(wetnet,x)
 
 #Alphabatize the rows and columns
 wetnet <- wetnet[ order(row.names(wetnet)), order(names(wetnet))]
+names(wetnet)[18]= "Confederated_Salish_and_Kootenai_Tribes._Fisheries_Program_Pablo"
 write.csv(wetnet, file="bipartite_network_as.df.csv")
 row.names(wetnet)<-NULL
 names(wetnet)<-NULL
